@@ -41,9 +41,9 @@ value is at most five times its smallest. Standard units and rounded conversions
 are shown in the choices and explained in the source notes. Deployment checks
 reject new question sets that exceed this spread.
 Checks also require whole-number values and a unique highest option after rounding.
-Source links and measurement notes appear after each choice and on the results
-screen. Example cobra values from the conversation were not used as real facts.
-Image credits appear under each subject. Gold uses an element illustration.
+Source links, measurement notes, and image credits appear in Behind the numbers
+at the bottom of the results after all five rounds. Example cobra values from
+the conversation were not used as real facts. Gold uses an element illustration.
 Book page count specifies an edition and ISBN. Approximate and upper-bound
 animal values are labeled explicitly. Different units are compared as written.
 

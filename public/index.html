@@ -1,4 +1,44 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f7f5ef"><meta name="description" content="Five subjects. Four hidden statistics. Pick the biggest number in this daily guessing game."><title>Go Figure — The daily stats guessing game</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f35b32'/%3E%3Cpath d='M10 28V19h5v9m3 0V13h5v15m3 0V7h5v21' fill='%23fff'/%3E%3C/svg%3E"><link rel="stylesheet" href="style.css"><script type="module" src="app.js"></script></head>
-<body><div class="shell"><header><a class="brand" href="./" aria-label="Go Figure home"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span>go figure<span class="brand-period">.</span></a><span class="header-note">A LITTLE KNOWLEDGE. A BIG NUMBER.</span><nav aria-label="Game information"><button id="help" class="icon-button" aria-label="How to play">?</button><button id="stats" class="icon-button" aria-label="Your statistics"><span class="mini-bars" aria-hidden="true"><i></i><i></i><i></i></span></button></nav></header>
-<main><section class="intro"><div class="eyebrow"><span class="live-dot"></span> THE DAILY STATS GUESSING GAME</div><h1>Go with your <em>biggest</em> guess.</h1><p>Five subjects. Four hidden stats. Which number comes out on top?</p></section><section class="game" aria-label="Daily game"><div class="game-top"><div><span class="edition" id="edition"></span><span class="date" id="date"></span></div><div class="score">YOUR SCORE <strong id="score">0</strong><span>pts</span></div></div><div class="round-strip"><span id="round-label"></span><div id="progress" class="progress" aria-label="Round progress"></div><span id="round-status">MAKE IT COUNT</span></div><div id="play"></div></section><div class="under-game"><span><span class="tiny-clock">◷</span> A fresh five at midnight Pacific.</span><button id="rules-link">New here? How to play <span aria-hidden="true">↗</span></button></div></main><footer><span class="footer-brand">Curiosity adds up.</span><span>ONE DAILY GAME. A WORLD OF NUMBERS.</span><span>Next game in <strong id="countdown">--:--:--</strong></span></footer></div><dialog id="modal"><button class="close" aria-label="Close dialog">×</button><div id="modal-content"></div></dialog><div role="status" id="toast"></div></body></html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="theme-color" content="#ffffff">
+ <meta name="description" content="Five daily rounds. Pick the biggest statistic and earn its value in points.">
+ <title>Go Figure — The daily stats guessing game</title>
+ <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23262626'/%3E%3Cpath d='M10 28V19h5v9m3 0V13h5v15m3 0V7h5v21' fill='%23fff'/%3E%3C/svg%3E">
+ <link rel="stylesheet" href="style.css">
+ <script type="module" src="app.js"></script>
+</head>
+<body>
+ <header class="site-header">
+  <div class="header-inner">
+   <button id="help" class="icon-button" aria-label="How to play"><span class="help-icon" aria-hidden="true">?</span></button>
+   <h1 class="brand"><a href="./" aria-label="Go Figure home">Go Figure</a></h1>
+   <button id="stats" class="icon-button" aria-label="Your statistics"><span class="mini-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
+  </div>
+ </header>
+ <main class="shell">
+  <p class="instructions">Pick the biggest statistic. Your pick = your points.</p>
+  <section class="game" aria-label="Daily game">
+   <div class="game-top">
+    <div><span class="sr-only" id="edition"></span><span class="date" id="date"></span></div>
+    <div class="score">Score <strong id="score">0</strong></div>
+   </div>
+   <div class="round-strip">
+    <span id="round-label"></span>
+    <div id="progress" class="progress" aria-label="Round progress"></div>
+    <span id="round-status" class="sr-only"></span>
+   </div>
+   <div id="play"></div>
+  </section>
+  <footer>
+   <button id="rules-link" class="text-button">How to play</button>
+   <span>Next game in <strong id="countdown">--:--:--</strong></span>
+  </footer>
+  <section id="behind-numbers" class="sources" aria-labelledby="sources-title" hidden></section>
+ </main>
+ <dialog id="modal"><button class="close" aria-label="Close dialog">×</button><div id="modal-content"></div></dialog>
+ <div role="status" id="toast"></div>
+</body>
+</html>
