@@ -1,0 +1,5 @@
+node_modules/
+*.tar.gz
+test-results/
+public/Highest.html
+public/Go-Figure.html

@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {dateKey,nextMidnight,puzzleFor,earned,validAnswers} from '../public/game.js';
+import {bank} from '../public/questions.js';
+test('daily date uses San Diego midnight, not UTC midnight',()=>{assert.equal(dateKey(new Date('2026-11-22T07:59:59Z')),'2026-11-21');assert.equal(dateKey(new Date('2026-11-22T08:00:00Z')),'2026-11-22');});
+test('reset handles 23 and 25 hour daylight saving days',()=>{for(const [now,end] of [['2026-03-08T08:00:00Z','2026-03-09T07:00:00Z'],['2026-11-01T07:00:00Z','2026-11-02T08:00:00Z'],['2026-07-15T12:00:00Z','2026-07-16T07:00:00Z']])assert.equal(new Date(nextMidnight(new Date(now))).toISOString(),new Date(end).toISOString());});
+test('daily sets are deterministic, contain five unique subjects, and change next day',()=>{const a=puzzleFor(bank,'2026-11-22');assert.deepEqual(a,puzzleFor(bank,'2026-11-22'));assert.equal(new Set(a.map(x=>x.id)).size,5);assert.notDeepEqual(a.map(x=>x.id),puzzleFor(bank,'2026-11-23').map(x=>x.id));});
+test('every selection earns its value, including a lower option and decimals',()=>{const p=[{options:[{value:90},{value:435}]},{options:[{value:19.3}]}];assert.equal(earned(p,[0,0]),109.3);assert.equal(earned(p,[1,0]),454.3);});
+test('bank has four positive sourced values and a unique maximum per subject',()=>{for(const q of bank){assert.equal(q.options.length,4);assert.ok(q.sources.length);assert.ok(q.options.every(x=>Number.isFinite(x.value)&&x.value>0));assert.equal(q.options.filter(x=>x.value===Math.max(...q.options.map(x=>x.value))).length,1);}});
+test('rejects damaged stored answers',()=>{for(const bad of [null,{},[0,-1],[4],[1.5],Array(6).fill(0)])assert.equal(validAnswers(bad),false);assert.equal(validAnswers([0,1,2,3,0]),true);});
