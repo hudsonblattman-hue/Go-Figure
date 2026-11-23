@@ -6,8 +6,14 @@ Then open http://localhost:3000
 Requires Python 3 for the development server; no dependency installation needed.
 
 Run rules and timezone tests:
+  npm ci
   npm test
 Requires Node.js 18 or later.
+
+Build the website for publication:
+  npm run build
+The dist folder contains the complete site. JavaScript and CSS use content-based
+file names, so a game update cannot reuse an older cached script or stylesheet.
 
 Rules:
 Five daily questions, four hidden numerical statistics each. Select the largest
@@ -45,15 +51,17 @@ new effective dates or bank versions; do not edit a bank already in use for a
 day. November 22 was explicitly reissued with a new attempt key so players can
 replay the closer questions immediately. That day's earlier attempts remain in
 browser storage but are excluded from active completion counts and streaks.
-Other days' storage keys and the stable shuffle seed remain unchanged.
+Other days' storage keys and the stable shuffle seed remain unchanged. The
+current replay revision also starts fresh for players who finished the first
+balanced release; both earlier attempts remain archived in browser storage.
 
 HOSTING
-GitHub Pages publishes the public directory using .github/workflows/deploy-pages.yml.
+GitHub Pages builds and publishes dist using .github/workflows/deploy-pages.yml.
 Every push to main runs the game-rule and timezone checks, then publishes the
 website. A failed check prevents that version from being published. The workflow
 can also be started manually from the repository's Actions tab.
 GitHub Pages must use GitHub Actions as its publishing source in Settings > Pages.
-No backend is required. The public directory also works with other static hosts.
+No backend is required. The built dist folder also works with other static hosts.
 The standalone Go-Figure.html file embeds all scripts, styles, and images and can
 be opened directly. Its font falls back to installed system fonts offline.
 Source links need internet. Scores rely on the device clock and browser storage;

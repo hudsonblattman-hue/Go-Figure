@@ -23,14 +23,18 @@ jobs:
     steps:
       - name: Check out the source
         uses: actions/checkout@v6
+      - name: Install the build tool
+        run: npm ci
       - name: Check game rules and Pacific time reset
-        run: node --test test/*.test.js
+        run: npm test
+      - name: Build versioned game files
+        run: npm run build
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload the website
         uses: actions/upload-pages-artifact@v4
         with:
-          path: public
+          path: dist
       - name: Publish the website
         id: deployment
         uses: actions/deploy-pages@v4

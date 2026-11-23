@@ -1,1 +1,14 @@
-{"name":"go-figure","version":"1.0.0","private":true,"type":"module","scripts":{"start":"python -m http.server 3000 --bind 0.0.0.0 --directory public","test":"node --test test/*.test.js"}}
+{
+  "name": "go-figure",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "python -m http.server 3000 --bind 0.0.0.0 --directory public",
+    "test": "node --test test/*.test.js",
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}
