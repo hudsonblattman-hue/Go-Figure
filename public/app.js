@@ -1,7 +1,7 @@
-import {bank} from './questions.js';
+import {bankFor} from './questions.js';
 import {dateKey,dayNumber,puzzleFor,earned,validAnswers,nextMidnight,VERSION} from './game.js';
 const $=s=>document.querySelector(s),fmt=n=>n.toLocaleString('en-US',{maximumFractionDigits:3});
-let key=dateKey(),puzzle=puzzleFor(bank,key),answers=[],advanced=0,storageOK=true;
+let key=dateKey(),puzzle=puzzleFor(bankFor(key),key),answers=[],advanced=0,storageOK=true;
 const storageKey=()=>`highest:${VERSION}:${key}`;
 function read(){try{const s=JSON.parse(localStorage.getItem(storageKey()));if(s&&validAnswers(s.answers)){answers=s.answers;advanced=Number.isInteger(s.advanced)?Math.max(0,Math.min(s.advanced,answers.length,5)):0;}else{answers=[];advanced=0;}}catch{storageOK=false;answers=[];advanced=0;}}
 function save(){try{localStorage.setItem(storageKey(),JSON.stringify({answers,advanced}));}catch{storageOK=false;}}
@@ -53,7 +53,7 @@ function help(){openModal(`<div class="eyebrow" style="justify-content:flex-star
 function stats(){let records=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(!k.startsWith(`highest:${VERSION}:`))continue;const s=JSON.parse(localStorage.getItem(k));if(s&&validAnswers(s.answers)&&s.answers.length===5)records.push(k.split(':').at(-1));}}catch{}records.sort();let streak=0,cursor=dayNumber(key);if(!records.includes(key))cursor--;while(records.some(k=>dayNumber(k)===cursor)){streak++;cursor--;}
  openModal(`<h2>Your daily numbers.</h2><div class="stats-grid"><div><strong>${records.length}</strong><span>Games completed</span></div><div><strong>${streak}</strong><span>Current streak</span></div><div><strong>${answers.length}/5</strong><span>Today’s progress</span></div></div><p>Today’s score: <b>${fmt(earned(puzzle,answers))} points</b>.</p><p class="modal-note">Saved on this browser only. Daily totals have different maximums, so points are best compared with people playing the same day.</p>`);
 }
-function checkDay(){const next=dateKey();if(next===key)return false;key=next;puzzle=puzzleFor(bank,key);read();$('#modal').close();render();toast('A fresh daily five is ready.');return true;}
+function checkDay(){const next=dateKey();if(next===key)return false;key=next;puzzle=puzzleFor(bankFor(key),key);read();$('#modal').close();render();toast('A fresh daily five is ready.');return true;}
 function tick(){checkDay();const sec=Math.max(0,Math.floor((nextMidnight()-Date.now())/1000));$('#countdown').textContent=[Math.floor(sec/3600),Math.floor(sec/60)%60,sec%60].map(x=>String(x).padStart(2,'0')).join(':');}
 $('#help').onclick=help;$('#rules-link').onclick=help;$('#stats').onclick=stats;$('.close').onclick=()=>$('#modal').close();$('#modal').onclick=e=>{if(e.target===$('#modal')){const r=$('#modal').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)$('#modal').close();}};
 window.addEventListener('storage',e=>{if(e.key===storageKey()){read();render();}});document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick();});read();render();tick();setInterval(tick,1000);

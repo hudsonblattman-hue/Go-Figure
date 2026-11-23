@@ -27,16 +27,22 @@ policies vary by browser. Hosting the public folder gives more reliable storage.
 CONTENT
 The starter bank contains 10 researched subjects. Five are selected each day;
 subjects repeat. It does not automatically research or generate new facts.
+From the November 23, 2026 Pacific daily reset, every question's largest numeric
+value is at most five times its smallest. Standard units and rounded conversions
+are shown in the choices and explained in the source notes. Deployment checks
+reject new question sets that exceed this spread.
 Source links and measurement notes appear after each choice and on the results
 screen. Example cobra values from the conversation were not used as real facts.
 Image credits appear under each subject. Gold uses an element illustration.
 Book page count specifies an edition and ISBN. Approximate and upper-bound
 animal values are labeled explicitly. Different units are compared as written.
 
-Edit public/questions.js to add questions, preserving the format and source
-links. To change the bank or ordering, create a new bank version and update
-VERSION and the stable shuffle seed in public/game.js; deploy changes between
-daily games to avoid altering an in-progress day's questions.
+Edit public/questions.js to add future question sets, preserving the format,
+five-to-one limit, and source links. public/questions-legacy.js preserves the
+original bank. bankFor(date) selects a bank by Pacific date, so saved answers for
+earlier games keep their original meaning. Stage future content changes behind
+new effective dates or bank versions; do not edit a bank already in use for a
+day. Storage keys and the stable shuffle seed remain compatible with prior games.
 
 HOSTING
 GitHub Pages publishes the public directory using .github/workflows/deploy-pages.yml.

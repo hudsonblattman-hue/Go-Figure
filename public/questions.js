@@ -1,14 +1,59 @@
+import {bank as originalBank} from './questions-legacy.js';
+import {dateKey} from './game.js';
+
+export const BALANCED_FROM = '2026-11-23'; // Midnight in America/Los_Angeles.
+export const MAX_STAT_RATIO = 5;
 const opt=(label,unit,value)=>({label,unit,value});
 const src=(label,url)=>({label,url});
-export const bank=[
- {id:'eiffel',title:'The Eiffel Tower',category:'BUILT WORLD',subtitle:'Paris, France',image:'eiffel.jpg',credit:'Anthony DELANOIX / Unsplash',creditUrl:'https://unsplash.com/photos/uG8NCFtJIaY',note:'Height includes antennas. Weights use the tower operator’s published figures.',options:[opt('Height','m',330),opt('Steps to the top','steps',1665),opt('Metal frame weight','tonnes',7300),opt('Total weight','tonnes',10100)],sources:[src('Eiffel Tower — key figures','https://www.toureiffel.paris/fr/le-monument/chiffres-cle'),src('Eiffel Tower — stairs','https://www.toureiffel.paris/en/faq/spot/how-can-you-walk-eiffel-tower-foot')]},
- {id:'romeo',title:'Romeo and Juliet',category:'ON THE BOOKSHELF',subtitle:'William Shakespeare · Folger edition',image:'romeo.jpg',contain:true,credit:'Folger Shakespeare Library / Simon & Schuster',creditUrl:'https://www.simonandschuster.net/books/Romeo-and-Juliet/William-Shakespeare/Folger-Shakespeare-Library/9780743477116',note:'Page count is for the Folger mass market paperback, ISBN 9780743477116. The other values refer to the play itself.',options:[opt('Page count','pages',336),opt('Number of acts','acts',5),opt('Opening prologue length','lines',14),opt('Juliet’s age','years',13)],sources:[src('Publisher — edition and pages','https://www.simonandschuster.net/books/Romeo-and-Juliet/William-Shakespeare/Folger-Shakespeare-Library/9780743477116'),src('Folger — play and prologue','https://www.folger.edu/explore/shakespeares-works/romeo-and-juliet/read/'),src('Folger — Juliet’s age','https://www.folger.edu/blogs/folger-spotlight/collection-connections-fair-rosaline/')]},
- {id:'whale',title:'The blue whale',category:'WILD THINGS',subtitle:'Balaenoptera musculus',image:'whale.jpg',credit:'NOAA Fisheries',creditUrl:'https://www.fisheries.noaa.gov/species/blue-whale',note:'These are NOAA’s listed upper values: maximum size and upper ends of estimated lifespan and gestation ranges. They are not measurements of one individual.',options:[opt('Maximum length','ft',110),opt('Listed maximum weight','lb',330000),opt('Estimated lifespan, upper end','years',90),opt('Gestation, upper estimate','months',12)],sources:[src('NOAA Fisheries — blue whale','https://www.fisheries.noaa.gov/species/blue-whale')]},
- {id:'liberty',title:'The Statue of Liberty',category:'BUILT WORLD',subtitle:'New York Harbor, United States',image:'liberty.jpg',credit:'Florian Herzog / Unsplash',creditUrl:'https://unsplash.com/photos/BrnT-lNTFJE',note:'Height is measured from ground to torch. Measurements and counts follow the National Park Service statistics page.',options:[opt('Height, ground to torch','m',92.99),opt('Windows in the crown','windows',25),opt('Rays on the crown','rays',7),opt('Length of right arm','m',12.8)],sources:[src('National Park Service — statue statistics','https://home.nps.gov/stli/learn/historyculture/statue-statistics.htm')]},
- {id:'bridge',title:'The Golden Gate Bridge',category:'BUILT WORLD',subtitle:'San Francisco, California',image:'bridge.jpg',credit:'Clay Elliot / Unsplash',creditUrl:'https://unsplash.com/photos/oRtXqWRjWIE',note:'Rounded metric figures as published by the Golden Gate Bridge district. Main span is the distance between the towers.',options:[opt('Main span length','m',1280),opt('Tower height above water','m',227),opt('Bridge width','m',27),opt('Traffic lanes','lanes',6)],sources:[src('Bridge district — construction statistics','https://www.goldengate.org/bridge/history-research/statistics-data/design-construction-stats/'),src('Bridge district — operations','https://www.goldengate.org/bridge/bridge-operations/')]},
- {id:'gold',title:'Gold',category:'ELEMENT OF SURPRISE',subtitle:'Au · The precious metal',image:'gold.gif',contain:true,credit:'Visual Elements / Royal Society of Chemistry',creditUrl:'https://periodic-table.rsc.org/element/79/gold',note:'Properties follow the Royal Society of Chemistry. Relative atomic mass is dimensionless; density is for the solid at room temperature. Image is an element illustration.',options:[opt('Atomic number','',79),opt('Melting point','°C',1064.18),opt('Relative atomic mass','',196.967),opt('Density','g/cm³',19.3)],sources:[src('Royal Society of Chemistry — gold','https://periodic-table.rsc.org/element/79/gold')]},
- {id:'saturn',title:'Saturn',category:'OUT OF THIS WORLD',subtitle:'The ringed planet',image:'saturn.jpg',credit:'NASA/JPL-Caltech/Space Science Institute',creditUrl:'https://science.nasa.gov/saturn/facts/',note:'Rounded planetary values from NASA. A year means one orbit; a day means one rotation. AU is the Earth–Sun distance.',options:[opt('Length of day','Earth hours',10.7),opt('Length of year','Earth years',29.4),opt('Distance from the Sun','AU',9.5),opt('Axial tilt','degrees',26.73)],sources:[src('NASA Science — Saturn facts','https://science.nasa.gov/saturn/facts/')]},
- {id:'mars',title:'Mars',category:'OUT OF THIS WORLD',subtitle:'The red planet',image:'mars.jpg',credit:'NASA/JPL-Caltech/USGS',creditUrl:'https://science.nasa.gov/mars/facts/',note:'Rounded values from NASA. Diameter is the average diameter listed in the InSight mission press kit.',options:[opt('Length of day','Earth hours',24.6),opt('Length of year','Earth days',687),opt('Number of moons','moons',2),opt('Average diameter','km',6780)],sources:[src('NASA — Mars facts','https://science.nasa.gov/mars/facts/'),src('NASA JPL — Mars at a glance','https://www.jpl.nasa.gov/news/press_kits/insight/landing/facts/mars-at-a-glance/')]},
- {id:'jupiter',title:'Jupiter',category:'OUT OF THIS WORLD',subtitle:'The gas giant',image:'jupiter.jpg',credit:'NASA/JPL-Caltech/SwRI/MSSS',creditUrl:'https://science.nasa.gov/jupiter/jupiter-facts/',note:'Radius and day length follow NASA; year length follows ESA. All values are rounded as stated in those sources.',options:[opt('Radius','km',69911),opt('Length of day','Earth hours',9.9),opt('Length of year','Earth years',11.86),opt('Distance from the Sun','AU',5.2)],sources:[src('NASA — Jupiter facts','https://science.nasa.gov/jupiter/jupiter-facts/'),src('ESA — Jupiter facts','https://www.esa.int/articles/about-us/directorates/science/juice/facts-about-jupiter'),src('NASA — Jupiter distance','https://www.nasa.gov/solar-system/what-is-jupiter/')]},
- {id:'moon',title:'The Moon',category:'OUT OF THIS WORLD',subtitle:'Our nearest celestial neighbor',image:'moon.jpg',credit:'NASA',creditUrl:'https://science.nasa.gov/moon/facts/',note:'Mean radius, average Earth distance, approximate sunlit temperature, and orbital period. All values are rounded as labeled.',options:[opt('Mean radius','km',1737.4),opt('Average distance from Earth','km',384400),opt('Sunlit surface temperature','°C, approx.',127),opt('Orbit around Earth','Earth days, approx.',27.32)],sources:[src('NASA — Moon facts','https://science.nasa.gov/moon/facts/'),src('NASA — Moon fact sheet','https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html')]}
-];
+
+const updates={
+ eiffel:{
+  note:'Height includes antennas. First-floor height uses the operator’s figure in feet; ground-level width uses its metric figure. The 72 names refer to the original frieze commissioned by Gustave Eiffel, excluding later additions.',
+  options:[opt('Height','m',330),opt('First-floor height','ft',187),opt('Ground-level width','m',125),opt('Names on the original frieze','names',72)],
+  sources:[src('Eiffel Tower — metric key figures','https://www.toureiffel.paris/fr/le-monument/chiffres-cle'),src('Eiffel Tower — imperial key figures','https://www.toureiffel.paris/en/the-monument/key-figures'),src('Eiffel Tower — the original 72 names','https://www.toureiffel.paris/en/news/130-years/whose-are-72-names-inscribed-eiffel-tower-and-why-are-they-there')]
+ },
+ romeo:{
+  note:'Counts refer to the play in the Folger text, rather than to the physical book. The 24 scenes are counted from its act-and-scene listing: 5 + 6 + 5 + 5 + 3. Prologues are excluded from the scene count; the opening prologue has 14 lines.',
+  options:[opt('Number of scenes','scenes',24),opt('Number of acts','acts',5),opt('Opening prologue length','lines',14),opt('Juliet’s age','years',13)],
+  sources:[src('Folger — complete play and scene listing','https://www.folger.edu/explore/shakespeares-works/romeo-and-juliet/read/'),src('Folger — Juliet’s age','https://www.folger.edu/blogs/folger-spotlight/collection-connections-fair-rosaline/')]
+ },
+ whale:{
+  note:'These are NOAA’s listed maximum size and upper ends of its estimated average-lifespan and gestation ranges, not measurements of one individual. The listed 330,000 lb is about 150 metric tonnes. The upper gestation estimate of 12 months is expressed as approximately 365 days. Rounded conversions are explicitly labeled.',
+  options:[opt('Maximum length','ft',110),opt('Listed maximum weight','metric tonnes, approx.',150),opt('Estimated lifespan, upper end','years',90),opt('Gestation, upper estimate','days, approx.',365)]
+ },
+ liberty:{
+  note:'Measurements and counts follow the National Park Service. Total height is ground to torch in meters. Right-arm length uses the published 42 feet. Nose length is 4 feet 6 inches, converted exactly to 54 inches.',
+  options:[opt('Height, ground to torch','m',92.99),opt('Windows in the crown','windows',25),opt('Length of nose','inches',54),opt('Length of right arm','ft',42)]
+ },
+ bridge:{
+  note:'Figures follow the Golden Gate Bridge district in the units shown. Roadway width is between curbs. Clearance is measured above mean higher high water; tower height is above water.',
+  options:[opt('Clearance above high water','ft',220),opt('Tower height above water','m',227),opt('Bridge width','ft',90),opt('Roadway width','ft',62)],
+  sources:[src('Bridge district — construction statistics','https://www.goldengate.org/bridge/history-research/statistics-data/design-construction-stats/')]
+ },
+ gold:{
+  note:'Properties follow the Royal Society of Chemistry. Relative atomic mass is dimensionless. Its listed covalent radius of 1.30 angstroms and non-bonded atomic radius of 2.14 angstroms are expressed as 130 and 214 picometers (1 angstrom = 100 pm). Image is an element illustration.',
+  options:[opt('Atomic number','',79),opt('Covalent radius','pm',130),opt('Relative atomic mass','',196.967),opt('Non-bonded atomic radius','pm',214)]
+ },
+ mars:{
+  note:'The rotation period is rounded to 24.6 hours. Axial tilt of 25 degrees and atmospheric carbon dioxide of 95.3% follow the NASA JPL InSight press kit. Mean orbital speed of 24.08 km/s follows NASA’s Mars fact sheet.',
+  options:[opt('Rotation period','Earth hours, approx.',24.6),opt('Axial tilt','degrees, approx.',25),opt('Atmospheric carbon dioxide','%',95.3),opt('Mean orbital speed','km/s',24.08)],
+  sources:[src('NASA JPL — Mars at a glance','https://www.jpl.nasa.gov/news/press_kits/insight/landing/facts/mars-at-a-glance/'),src('NASA — Mars fact sheet','https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html')]
+ },
+ jupiter:{
+  note:'Day length, Sun distance, and axial tilt follow NASA’s rounded figures. Year length follows ESA. An astronomical unit (AU) is the Earth–Sun distance.',
+  options:[opt('Axial tilt','degrees, approx.',3),opt('Length of day','Earth hours',9.9),opt('Length of year','Earth years',11.86),opt('Distance from the Sun','AU',5.2)]
+ },
+ moon:{
+  note:'Values follow NASA’s Moon fact sheet. Mean density of 3,344 kg/m³ is expressed as 3.344 g/cm³. Orbital inclination is relative to the ecliptic, the plane of Earth’s orbit around the Sun.',
+  options:[opt('Surface gravity','m/s²',1.62),opt('Escape velocity','km/s',2.38),opt('Mean density','g/cm³',3.344),opt('Orbital tilt to the ecliptic','degrees',5.145)],
+  sources:[src('NASA — Moon fact sheet','https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html')]
+ }
+};
+
+export const balancedBank=originalBank.map(question=>({...question,...updates[question.id]}));
+
+// Keep previously published questions and saved scores stable across the rollout.
+export function bankFor(key){return key<BALANCED_FROM?originalBank:balancedBank;}
+
+// Compatibility for a cached app.js that still imports the old named export.
+export const bank=bankFor(dateKey());
