@@ -50,7 +50,22 @@ const updates={
  }
 };
 
-export const balancedBank=originalBank.map(question=>({...question,...updates[question.id]}));
+function wholeNumberQuestion(question){
+ const rounded=question.options.filter(option=>!Number.isInteger(option.value));
+ if(!rounded.length)return question;
+ return {
+  ...question,
+  options:question.options.map(option=>Number.isInteger(option.value)?option:{
+   ...option,
+   sourceValue:option.value,
+   value:Math.round(option.value),
+   unit:option.unit.includes('approx.')?option.unit:`${option.unit?option.unit+', ':''}approx.`
+  }),
+  note:question.note+' Game values are rounded to the nearest whole number: '+rounded.map(option=>`${option.label} ${option.value} → ${Math.round(option.value)}`).join('; ')+'.'
+ };
+}
+
+export const balancedBank=originalBank.map(question=>wholeNumberQuestion({...question,...updates[question.id]}));
 
 // Earlier days retain their original questions. The update day is reissued.
 export function bankFor(key){return key<BALANCED_FROM?originalBank:balancedBank;}

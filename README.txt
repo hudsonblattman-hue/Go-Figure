@@ -19,7 +19,10 @@ Rules:
 Five daily questions, four hidden numerical statistics each. Select the largest
 number using the units shown. Every pick earns its numeric value, even if it is
 not the largest. All four values and proportional bars appear after each pick.
-Daily total is the sum of the five chosen values, to three decimal places.
+Current game statistics and points use whole numbers. Measurements are rounded
+to the nearest whole number when necessary, labeled approx., and documented in
+the source notes. The daily total is the sum of those same five displayed values.
+Earlier archived games retain their original precision.
 
 Daily reset is midnight America/Los_Angeles (San Diego), including DST changes.
 Everyone on the same version gets the same daily questions and option order.
@@ -37,6 +40,7 @@ From the reissued November 22, 2026 Pacific game, every question's largest numer
 value is at most five times its smallest. Standard units and rounded conversions
 are shown in the choices and explained in the source notes. Deployment checks
 reject new question sets that exceed this spread.
+Checks also require whole-number values and a unique highest option after rounding.
 Source links and measurement notes appear after each choice and on the results
 screen. Example cobra values from the conversation were not used as real facts.
 Image credits appear under each subject. Gold uses an element illustration.
