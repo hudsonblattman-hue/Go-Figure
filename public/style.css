@@ -10,7 +10,8 @@ a{color:inherit}
 .site-header{border-bottom:1px solid var(--line)}
 .header-inner{max-width:640px;min-height:64px;margin:auto;padding:0 12px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center}
 .brand{margin:0;text-align:center;font:bold 32px Georgia,'Times New Roman',serif;letter-spacing:-1px}
-.brand a{text-decoration:none}
+.brand a{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:10px}
+.brand-mark{display:block;width:40px;height:30px;flex-shrink:0}
 .icon-button{width:44px;height:44px;border:0;background:none;display:grid;place-items:center}
 .help-icon{display:grid;place-items:center;width:21px;height:21px;border:1.5px solid currentColor;border-radius:50%;font-weight:bold;font-size:15px}
 .mini-bars{height:21px;display:flex;align-items:flex-end;gap:3px}
