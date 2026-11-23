@@ -1,5 +1,9 @@
 export const ZONE = 'America/Los_Angeles';
 export const VERSION = 'v1';
+export const CONTENT_UPDATE_DAY = '2026-11-22';
+export function storageKeyFor(key) {
+  return `highest:${VERSION}:${key}${key===CONTENT_UPDATE_DAY?':balanced':''}`;
+}
 export function dateKey(now = new Date()) {
   const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', {timeZone: ZONE,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now).map(x=>[x.type,x.value]));
   return `${p.year}-${p.month}-${p.day}`;

@@ -1,7 +1,7 @@
 import {bank as originalBank} from './questions-legacy.js';
-import {dateKey} from './game.js';
+import {dateKey,CONTENT_UPDATE_DAY} from './game.js';
 
-export const BALANCED_FROM = '2026-11-23'; // Midnight in America/Los_Angeles.
+export const BALANCED_FROM = CONTENT_UPDATE_DAY;
 export const MAX_STAT_RATIO = 5;
 const opt=(label,unit,value)=>({label,unit,value});
 const src=(label,url)=>({label,url});
@@ -52,7 +52,7 @@ const updates={
 
 export const balancedBank=originalBank.map(question=>({...question,...updates[question.id]}));
 
-// Keep previously published questions and saved scores stable across the rollout.
+// Earlier days retain their original questions. The update day is reissued.
 export function bankFor(key){return key<BALANCED_FROM?originalBank:balancedBank;}
 
 // Compatibility for a cached app.js that still imports the old named export.

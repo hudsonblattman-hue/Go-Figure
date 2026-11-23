@@ -27,7 +27,7 @@ policies vary by browser. Hosting the public folder gives more reliable storage.
 CONTENT
 The starter bank contains 10 researched subjects. Five are selected each day;
 subjects repeat. It does not automatically research or generate new facts.
-From the November 23, 2026 Pacific daily reset, every question's largest numeric
+From the reissued November 22, 2026 Pacific game, every question's largest numeric
 value is at most five times its smallest. Standard units and rounded conversions
 are shown in the choices and explained in the source notes. Deployment checks
 reject new question sets that exceed this spread.
@@ -42,7 +42,10 @@ five-to-one limit, and source links. public/questions-legacy.js preserves the
 original bank. bankFor(date) selects a bank by Pacific date, so saved answers for
 earlier games keep their original meaning. Stage future content changes behind
 new effective dates or bank versions; do not edit a bank already in use for a
-day. Storage keys and the stable shuffle seed remain compatible with prior games.
+day. November 22 was explicitly reissued with a new attempt key so players can
+replay the closer questions immediately. That day's earlier attempts remain in
+browser storage but are excluded from active completion counts and streaks.
+Other days' storage keys and the stable shuffle seed remain unchanged.
 
 HOSTING
 GitHub Pages publishes the public directory using .github/workflows/deploy-pages.yml.

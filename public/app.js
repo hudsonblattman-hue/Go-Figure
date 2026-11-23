@@ -1,8 +1,8 @@
 import {bankFor} from './questions.js';
-import {dateKey,dayNumber,puzzleFor,earned,validAnswers,nextMidnight,VERSION} from './game.js';
+import {dateKey,dayNumber,puzzleFor,earned,validAnswers,nextMidnight,storageKeyFor,VERSION} from './game.js';
 const $=s=>document.querySelector(s),fmt=n=>n.toLocaleString('en-US',{maximumFractionDigits:3});
 let key=dateKey(),puzzle=puzzleFor(bankFor(key),key),answers=[],advanced=0,storageOK=true;
-const storageKey=()=>`highest:${VERSION}:${key}`;
+const storageKey=()=>storageKeyFor(key);
 function read(){try{const s=JSON.parse(localStorage.getItem(storageKey()));if(s&&validAnswers(s.answers)){answers=s.answers;advanced=Number.isInteger(s.advanced)?Math.max(0,Math.min(s.advanced,answers.length,5)):0;}else{answers=[];advanced=0;}}catch{storageOK=false;answers=[];advanced=0;}}
 function save(){try{localStorage.setItem(storageKey(),JSON.stringify({answers,advanced}));}catch{storageOK=false;}}
 function best(q){return Math.max(...q.options.map(o=>o.value));}
@@ -50,7 +50,7 @@ function renderSummary(){
 }
 function openModal(content){$('#modal-content').innerHTML=content;$('#modal').showModal();}
 function help(){openModal(`<div class="eyebrow" style="justify-content:flex-start;margin-bottom:14px">THE BIG IDEA</div><h2>Think bigger.</h2><p>Five subjects, from the everyday to the unexpected. Each has four statistics with the numbers hidden.</p><ol><li>Choose the statistic you think has the <b>largest numerical value</b>, using the units shown.</li><li>Reveal all four numbers and their comparison bars. Your choice earns its value in points—even if another option was higher.</li><li>Play all five rounds. Your total is the sum of your five choices.</li></ol><div class="example">Pick a stat worth <b>90</b>? Earn <b>90 points</b>.<br>A stat worth <b>435</b> would earn <b>435 points</b>.</div><p class="modal-note">Compare the numbers as written; don’t convert between units. Everyone gets the same five each day, resetting at midnight in San Diego (Pacific time). This version uses a rotating bank of 10 sourced subjects, so subjects repeat. Progress and statistics stay in this browser; they aren’t synced across devices.</p><button class="primary" id="got-it">Got it. Let’s play →</button>`);$('#got-it').onclick=()=>$('#modal').close();}
-function stats(){let records=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(!k.startsWith(`highest:${VERSION}:`))continue;const s=JSON.parse(localStorage.getItem(k));if(s&&validAnswers(s.answers)&&s.answers.length===5)records.push(k.split(':').at(-1));}}catch{}records.sort();let streak=0,cursor=dayNumber(key);if(!records.includes(key))cursor--;while(records.some(k=>dayNumber(k)===cursor)){streak++;cursor--;}
+function stats(){let records=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(!k.startsWith(`highest:${VERSION}:`))continue;const day=k.split(':')[2];if(!/^\d{4}-\d{2}-\d{2}$/.test(day)||k!==storageKeyFor(day))continue;const s=JSON.parse(localStorage.getItem(k));if(s&&validAnswers(s.answers)&&s.answers.length===5)records.push(day);}}catch{}records.sort();let streak=0,cursor=dayNumber(key);if(!records.includes(key))cursor--;while(records.some(k=>dayNumber(k)===cursor)){streak++;cursor--;}
  openModal(`<h2>Your daily numbers.</h2><div class="stats-grid"><div><strong>${records.length}</strong><span>Games completed</span></div><div><strong>${streak}</strong><span>Current streak</span></div><div><strong>${answers.length}/5</strong><span>Today’s progress</span></div></div><p>Today’s score: <b>${fmt(earned(puzzle,answers))} points</b>.</p><p class="modal-note">Saved on this browser only. Daily totals have different maximums, so points are best compared with people playing the same day.</p>`);
 }
 function checkDay(){const next=dateKey();if(next===key)return false;key=next;puzzle=puzzleFor(bankFor(key),key);read();$('#modal').close();render();toast('A fresh daily five is ready.');return true;}
