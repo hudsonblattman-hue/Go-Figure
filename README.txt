@@ -39,10 +39,13 @@ VERSION and the stable shuffle seed in public/game.js; deploy changes between
 daily games to avoid altering an in-progress day's questions.
 
 HOSTING
-Deploy the public directory to any static website host. No backend is required.
+GitHub Pages publishes the public directory using .github/workflows/deploy-pages.yml.
+Every push to main runs the game-rule and timezone checks, then publishes the
+website. A failed check prevents that version from being published. The workflow
+can also be started manually from the repository's Actions tab.
+GitHub Pages must use GitHub Actions as its publishing source in Settings > Pages.
+No backend is required. The public directory also works with other static hosts.
 The standalone Go-Figure.html file embeds all scripts, styles, and images and can
 be opened directly. Its font falls back to installed system fonts offline.
 Source links need internet. Scores rely on the device clock and browser storage;
 this is a casual Wordle-style game, not a trusted competition backend.
-The intended Sites deployment was unavailable because Sites was not enabled
-for the connected workspace. No production site was published.
